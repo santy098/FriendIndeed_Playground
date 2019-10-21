@@ -1,4 +1,4 @@
-﻿function GetData() {
+﻿function getData() {
     var dates = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
     var ildid = document.getElementById('ildid').value;
     var samples= document.getElementById('samples').value;
@@ -85,6 +85,20 @@
 
                 }]
 
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 50,
+                        top: 20,
+                        bottom: 20
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Pie chart'
+                }
             }
 
         });
@@ -123,7 +137,20 @@
                                 beginAtZero: true
                             }
                         }]
+                },
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 50,
+                        top: 20,
+                        bottom: 20
                     }
+                },
+                title: {
+                    display: true,
+                    text: 'Line Graph'
+                }
+
             }
 
 
@@ -157,6 +184,20 @@
                     borderWidth: 1
 
                 }]
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 50,
+                        top: 20,
+                        bottom: 20
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Polar Area Graph'
+                }
             }
 
 
@@ -190,6 +231,20 @@
                     borderWidth: 1
 
                 }]  
+            },
+            options: {
+                layout: {
+                    padding: {
+                        left: 50,
+                        right: 50,
+                        top: 20,
+                        bottom: 20
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Bar Chart'
+                }
             }
         });
     }

@@ -16,36 +16,48 @@
 <body>
 
     <center>
-        <div style="background-color:antiquewhite;">
-            ILDID:<br />
-            <input type="text" id="ildid" /><br />
-            Samples:<br />
-            <input type="text" id="samples" /><br />
-            Cash:<br />
-            <input type="text" id="cash" /><br />
-            Reports:<br />
-            <input type="text" id="reports" /><br />
-            POP:<br />
-            <input type="text" id="pop" /><br />
-            LatLong:<br />
-            <input type="text" id="latlong" /><br />
-            Zone:<br />
-            <input type="text" id="zone" /><br /><br />
-            <button type="button" class="btn btn-success" onclick="GetData()">Submit</button>
+
+        <div style="width:40%;">
+
+            <h2>Insert details to database</h2>
+
+            <input type="text" id="ildid" class="form-control" placeholder="Enter ILDID" /><br><br>
+            <input type="text" id="samples" class="form-control" placeholder="Enter Samples" /><br><br>
+            <input type="text" id="cash" class="form-control" placeholder="Enter cash" /><br><br>
+            <input type="text" id="reports" class="form-control" placeholder="Enter report" /><br><br>
+            <input type="text" id="pop" class="form-control" placeholder="Enter pop" /><br><br>
+            <input type="text" id="latlong" class="form-control" placeholder="Enter latlong" /><br><br>
+            <input type="text" id="zone" class="form-control" placeholder="Enter zone" /><br><br>
+
+            <button class="btn btn-success" onclick="getData()">Add</button>
+
         </div>
+
     </center>
-    <div class="container">
-        <canvas id="myChart"></canvas>
+    <br /><hr /><br />
+
+    <div class="row">
+        
+            <div class="container">
+                <canvas id="myChart" width="300" height="100"></canvas>
+            </div>
     </div>
-    <div class="container">
-        <canvas id="myChart1"></canvas>
+    <div class="row">
+            <div class="container">
+                <canvas id="myChart1" width="300" height="100"></canvas>
+            </div>
     </div>
-    <div class="container">
-        <canvas id="myChart2"></canvas>
-    </div>
-    <div class="container">
-        <canvas id="myChart3"></canvas>
-    </div>
+    <br /><hr /><br />
+        <div class="row">
+                <div class="container">
+                    <canvas id="myChart2" width="300" height="100"></canvas>
+                </div>
+        </div>
+        <div class="row">
+                <div class="container">
+                     <canvas id="myChart3" width="300" height="100"></canvas>
+                </div>
+        </div>
 
 </body>
 </html>
