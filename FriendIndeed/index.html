@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="index.js"></script>
+
+	<title>Test Full Flow</title>
+</head>
+<body>
+
+    <center>
+
+        <div style="width:40%;">
+
+            <h2>Insert details to database</h2>
+
+            <input type="text" id="ildid" class="form-control" placeholder="Enter ILDID" /><br><br>
+            <input type="text" id="samples" class="form-control" placeholder="Enter Samples" /><br><br>
+            <input type="text" id="cash" class="form-control" placeholder="Enter cash" /><br><br>
+            <input type="text" id="reports" class="form-control" placeholder="Enter report" /><br><br>
+            <input type="text" id="pop" class="form-control" placeholder="Enter pop" /><br><br>
+            <input type="text" id="latlong" class="form-control" placeholder="Enter latlong" /><br><br>
+            <input type="text" id="zone" class="form-control" placeholder="Enter zone" /><br><br>
+
+            <button class="btn btn-success" onclick="getData()">Add</button>
+
+        </div>
+
+    </center>
+    <br /><hr /><br />
+
+    <div class="row">
+        
+            <div class="container">
+                <canvas id="myChart" width="300" height="100"></canvas>
+            </div>
+    </div>
+    <div class="row">
+            <div class="container">
+                <canvas id="myChart1" width="300" height="100"></canvas>
+            </div>
+    </div>
+    <br /><hr /><br />
+        <div class="row">
+                <div class="container">
+                    <canvas id="myChart2" width="300" height="100"></canvas>
+                </div>
+        </div>
+        <div class="row">
+                <div class="container">
+                     <canvas id="myChart3" width="300" height="100"></canvas>
+                </div>
+        </div>
+
+</body>
+</html>
