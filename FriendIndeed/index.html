@@ -19,7 +19,7 @@
 
         <div style="width:40%;">
 
-            <h2>Insert details to database</h2>
+            <h2>Insert details to Test database</h2>
 
             <input type="text" id="ildid" class="form-control" placeholder="Enter ILDID" /><br><br>
             <input type="text" id="samples" class="form-control" placeholder="Enter Samples" /><br><br>
@@ -37,27 +37,40 @@
     <br /><hr /><br />
 
     <div class="row">
-        
-            <div class="container">
-                <canvas id="myChart" width="300" height="100"></canvas>
-            </div>
+
+        <div class="container">
+            <canvas id="myChart" width="300" height="100"></canvas>
+        </div>
     </div>
     <div class="row">
-            <div class="container">
-                <canvas id="myChart1" width="300" height="100"></canvas>
-            </div>
+        <div class="container">
+            <canvas id="myChart1" width="300" height="100"></canvas>
+        </div>
     </div>
     <br /><hr /><br />
-        <div class="row">
-                <div class="container">
-                    <canvas id="myChart2" width="300" height="100"></canvas>
-                </div>
+    <div class="row">
+        <div class="container">
+            <canvas id="myChart2" width="300" height="100"></canvas>
         </div>
-        <div class="row">
-                <div class="container">
-                     <canvas id="myChart3" width="300" height="100"></canvas>
-                </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <canvas id="myChart3" width="300" height="100"></canvas>
         </div>
+    </div>
+
+    <div id="map" style="height:100%"></div>
+    <script>
+        var map;
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -34.397, lng: 150.644 },
+                zoom: 8
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLLPiRUKip5WS0ShnUlZRwtKoffnbX_ME&callback=initMap"
+            async defer></script>
 
 </body>
 </html>
