@@ -253,3 +253,37 @@
         alert("Error in displaying the data");
     }
    
+
+
+function SendSMS() {
+
+    var xhttp = "", Address = "", MobileNo = "", Message = "", Sender = "", TotalMsg_Address = "", MessageText = "";
+
+
+    //console.log(InName[i], InPhone[i])
+
+    xhttp = "", Address = "", MobileNo = "", Message = "", Sender = "", TotalMsg_Address = "", MessageText = "";
+
+    xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            alert(this.responseText);
+        }
+    };
+    MessageText = "Thank You for your Order Shree Clinic. TAT for your Tests would be 4 Hrs. For Further Assistance on the same, Please Call: 903921513. Thank You";
+
+    Address = "http://roundsms.com/api/sendhttps.php?authkey=YTJkYTcxNTQ3MWY";
+    MobileNo = "&mobiles=8867615460,7483620382,9071322315";
+    Message = "&message=" + MessageText;
+    Sender = "&sender=FNDEED&type=1&route=2";
+
+    TotalMsg_Address = Address + MobileNo + Message + Sender;
+
+    xhttp.open("POST", TotalMsg_Address, true);
+    xhttp.send();
+
+    console.log("Msg " + " Sent");
+    console.log(TotalMsg_Address);
+
+
+}

@@ -1,0 +1,512 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LabBuddy Client</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+
+    <link href="css/Autocomplete.css" rel="stylesheet" />
+    <script src="LabBuddyClient.js"></script>
+    <script src="js/Autocomplete.js"></script>
+    <script src="js/prefixfree.min.js"></script>
+</head>
+<body>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            font-size: 22px;
+        }
+    </style>
+    <br>
+    <div class="container" style="width: 100%;">
+
+        <div style="height: 80px;">
+            <div class="h-100 d-inline-block" id="EntityID" style="text-align:center; vertical-align:central; width: 15%; background-color: white"></div>
+            <div class="h-100 d-inline-block" id="PriceDiv1" style="text-align:center;vertical-align:middle;width: 23%; background-color: #D4E6F1" onclick="CheapestSelect()"></div>
+            <div class="h-100 d-inline-block" id="PriceDiv2" style="text-align:center;vertical-align:middle;width: 23%; background-color: #D7BDE2" onclick="FastestSelect()"></div>
+            <div class="h-100 d-inline-block" id="PriceDiv3" style="text-align:center;vertical-align:middle;width: 23%; background-color: #FAD7A0" onclick="PremiumSelect()"></div>
+            <div class="h-100 d-inline-block" id="Logout_LoginDiv" style="text-align:center;vertical-align:central;width: 10%; background-color: white">
+                <button class="btn btn-default btn-sm" type="button" style="width: auto; border: 1px solid gray; font-size: 14px" onclick="Logout()"> <i class="fa fa-sign-out"></i></button>
+            </div>
+
+        </div>
+        <br>
+    </div>
+    <hr>
+    <div class="container" style="text-align: center">
+        <form autocomplete="off" action="/action_page.php">
+            <div class="autocomplete" style="width: 80%;">
+                <div class="input-group">
+                    <input type="text" id="TestNameIP" onfocus="this.value=''" class="form-control input-md" placeholder="Place Your Order Here" style="color : black; text-align: center; font-size: small">
+                    <span class="input-group-btn" style="margin-left: 1%">
+                        <button class="btn btn-default btn-sm" type="button" id="AddRowBTN" style="width: auto; background-color: #85C1E9;" onclick="Addto_Cart()"><i class="fa fa-plus"></i></button>
+                        <button class="btn btn-default btn-sm" type="button" style="width: auto; background-color: #F1948A" onclick="ClearCartArray()"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-success btn-sm" type="button" style="width: auto;" onclick="Calculate_Invoice()"><i class="fa fa-thumbs-up"></i></button>
+
+                    </span>
+                </div>
+            </div>
+            <br>
+        </form>
+    </div>
+    <br>
+
+    <div class="container" style="text-align: center; width: 50%" id="TestsOrdered_InvoiceDiv">
+    </div>
+    <br>
+
+
+    <script>
+        //autocomplete(document.getElementById("TestNameIP"), TestNames);
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function (e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        /*create a DIV element for each matching element:*/
+                        b = document.createElement("DIV");
+                        /*make the matching letters bold:*/
+                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += arr[i].substr(val.length);
+                        /*insert a input field that will hold the current array item's value:*/
+                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                        /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function (e) {
+                            /*insert the value for the autocomplete text field:*/
+                            inp.value = this.getElementsByTagName("input")[0].value;
+                            /*close the list of autocompleted values,
+                            (or any other open lists of autocompleted values:*/
+                            closeAllLists();
+                        });
+                        a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function (e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        /*and simulate a click on the "active" item:*/
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        var TestNames = [
+                "1st Trimester Down Syndrome Screening Double Marker",
+                "Anti Cyclic Citrullinated Peptide (Anti Ccp)",
+                "Anti Thyro Peroxidase Antibody (Tpo)",
+                "C Reactive Protein (Crp)   Quantitative",
+                "Ca 125",
+                "Creatinine",
+                "Electrolytes (Na  K  Cl)",
+                "Estradiol   Oestrogen   E2",
+                "Ferritin",
+                "Folic Acid   Folate   Serum",
+                "Follicle Stimulating Hormone (Fsh)",
+                "Free T3  Free T4 & Tsh   Free Tft",
+                "Fsh  Lh & Prolactin",
+                "Insulin Fasting",
+                "Leutinising Hormone (Lh)",
+                "Lipid Profile",
+                "Liver Function Test",
+                "Para Thyroid Hormone (Pth)",
+                "Prolactin",
+                "Quadruple Marker",
+                "Testosterone   Total",
+                "Thyroid Profile  Tft( T3  T4  Tsh)",
+                "Thyroid Stimulating Hormone  Tsh",
+                "Total Prostate Specific Antigen   Psa",
+                "Triple Test Markers  Second Trimester",
+                "Vitamin B12 (Cyanocobalamin)",
+                "Vitamin D (25   Hydroxy Cholecalciferol)",
+                "Absolute Eosinophil Count (Aec)",
+                "Absolute Neutrophil Count",
+                "Acid Phosphatase   Total",
+                "Acid Phosphatase   Total & Prostatic Fraction",
+                "Adenosine Deaminase (Ada)   Serum",
+                "Afb 24 Hrs Sputum",
+                "Afb   24 Hrs Urine",
+                "Afb   Urine",
+                "Afb Culture   Conventional Method",
+                "Alanine Aminotransferase (Alt Sgpt)",
+                "Albumin",
+                "Albumin   Ascitic Fluid",
+                "Albumin   Protein   Urine",
+                "Alcohol   Blood (Qualitative)",
+                "Alcohol   Urine (Qualitative)",
+                "Alfa Feto Protein Afp",
+                "Alkaline Phosphatase (Alp   Sap)",
+                "Ammonia",
+                "Amphetamine (Doa)   Urine",
+                "Amylase   Serum",
+                "Amylase Urine Spot Sample",
+                "Ana Profile",
+                "Anaerobic Culture",
+                "Anca Mpo   P Anca",
+                "Anca Pr3   C Anca",
+                "Angiotensin Converting Enzyme (Ace)",
+                "Anti Cardiolipin Antibody (Acl)   Igg",
+                "Anti Cardiolipin Antibody (Acl)   Igm",
+                "Anti Dsdna   (Elisa)",
+                "Anti Microsomal (Ama)   Anti Thyro Peroxidase (Tpo)",
+                "Anti Mullerian Hormone (Amh)",
+                "Anti Neutrophil Cytoplasmic Antibody (Anca)",
+                "Anti Nuclear Antibodies (Ana)  Elisa",
+                "Anti Phospholipid Antibody (Apa)   Igg",
+                "Anti Phospholipid Antibody (Apa)   Igm",
+                "Anti Streptolysin O (Aso) Titre   Quantitative",
+                "Anti Thyroglobulin Antibody (Anti Tg Ab)",
+                "Anti Thyroid Antibodies (Ama  Atg)",
+                "Antibody To H.Pylori   Total",
+                "Antibody To Hepatitis B Surface Antigen   (Anti Hbsag)",
+                "Ascitic   Peritoneal Fluid Analysis",
+                "Ascitic   Peritoneal Fluid For Culture & Sensitivity   Aerobic",
+                "Aspartate Aminotransferase (Ast Sgot)",
+                "Aspirated Fluid For Culture & Sensitivity   Aerobic",
+                "Barbiturate (Doa)   Urine",
+                "Bence Jones Protein   Urine",
+                "Benzodiazepine (Doa)   Urine",
+                "Beta Human Chorionic Gonadotrophin   Beta Hcg",
+                "Bicarbonate Hco3",
+                "Bilirubin (Total  Direct & Id)",
+                "Biopsy (Extra Large Specimen)",
+                "Biopsy (Large Sized Specimen)",
+                "Biopsy (Medium Sized Specimen)",
+                "Biopsy (Oncology Specimen)",
+                "Biopsy (Small Specimen)",
+                "Blood Culture & Sensitivity(Enteric & Nonenteric)",
+                "Blood Group & Rh Type",
+                "Blood Urea Nitrogen (Bun)",
+                "Body Fluid For Culture & Sensitivity   Aerobic",
+                "Bone Marrow Reporting",
+                "Bone Specimen   Medium",
+                "Bone Specimen   Small",
+                "Bronchial Washing For Culture & Sensitivity   Aerobic",
+                "Brucella Agglutinins Test",
+                "B Type Natriuretic Peptide   Bnp",
+                "C Peptide",
+                "Ca 15 3",
+                "Ca 19 9",
+                "Calcium",
+                "Calcium   24 Hrs Urine",
+                "Calcium  Urine   Spot Sample",
+                "Calcium Creatinine Ratio   24 Hrs Urine",
+                "Calcium Creatinine Ratio   Spot Sample   Urine",
+                "Carbamazepine   Tegretol (Tdm)",
+                "Cardiac Enzymes (Sgot Ck Ckmb Trop I (Qualitative) Ldh)",
+                "Catheter Tip For Culture & Sensitivity   Aerobic",
+                "Cea (Carcino Embryonic Antigen)",
+                "Cerebrospinal Fluid (Csf) Analysis",
+                "Cerebrospinal Fluid (Csf) For Culture & Sensitivity   Aerobic",
+                "Chikungunya   Igm Antibody (Qualitative)",
+                "Chloride",
+                "Chloride   Cerebrospinal Fluid (Csf)",
+                "Chloride  Urine   Spot Sample",
+                "Cholesterol   Body Fluid",
+                "Cholesterol Total",
+                "Cholinesterase (Pseudocholinesterase)",
+                "Cocaine (Doa)   Urine",
+                "Complete Blood Count With Esr",
+                "Complete Haemogram",
+                "Conjunctival Swab For Culture & Sensitivity   Aerobic",
+                "Cortisol   4 Pm",
+                "Cortisol   8 Am",
+                "Cortisol   Random",
+                "Creatinine   24 Hrs Urine",
+                "Creatinine   Body Fluid",
+                "Creatinine Clearance   24 Hrs Urine",
+                "Creatinine Clearance   6 Hrs Urine",
+                "Creatinine Kinase   Mb   Creatinine Phosphokinase Mb (Ck Mb)",
+                "Creatinine Kinase   Creatinine Phosphokinase (Ck Cpk)",
+                "Creatinine Urine   Spot Sample",
+                "Cytology",
+                "Cytomegalo Virus (Cmv) Antibody   Igg",
+                "Cytomegalo Virus (Cmv) Antibody   Igm",
+                "D Dimer",
+                "Dengue Profile (Igg  Igm & Ns1)   Rapid",
+                "Dengue Test Camp",
+                "Dhea Sulphate",
+                "Direct Coombs Test (Dct)",
+                "Drain Tip For Culture & Sensitivity   Aerobic",
+                "Ear Swab For Culture & Sensitivity   Aerobic",
+                "Electrolytes   24 Hrs Urine",
+                "Electrolytes   Urine (Spot Sample)",
+                "Electrophoresis   Protein",
+                "Erythrocyte Sedimentation Rate   Esr",
+                "Estriol Unconjugated   E3",
+                "Et Tip For Culture & Sensitivity   Aerobic",
+                "Eye Swab For Culture & Sensitivity   Aerobic",
+                "Fibrin Degradation Product (Fdp) D Dimer",
+                "Fluid For Culture & Sensitivity   Aerobic",
+                "Fnac   Multiple Sites",
+                "Fnac   Single Site",
+                "Free Beta Human Chorionic Gonadotrophin (Free B Hcg)",
+                "Free Prostatic Specific Antigen (Free & Total)",
+                "Free T3 (Ft3)",
+                "Free T4 (Ft4)",
+                "Fungal Culture",
+                "G6pd   Glucose 6 Phosphate Dehydrogenase",
+                "Gamma Glutamyl Transferase (G Gt)",
+                "Glucose   Fasting",
+                "Glucose   Fasting   Blood & Urine",
+                "Glucose   Post Dinner",
+                "Glucose   Post Lunch",
+                "Glucose   Post Prandial (Pp)   Blood & Urine",
+                "Glucose   Postprandial",
+                "Glucose   Postprandial With Oral Glucose",
+                "Glucose   Pre Dinner",
+                "Glucose   Pre Lunch",
+                "Glucose   Random",
+                "Glucose   Random Blood & Urine",
+                "Glucose   Synovial Fluid",
+                "Glucose Challenge Test (Gct)",
+                "Glycosylated Haemoglobin (Hba1c)",
+                "Gram S Stain",
+                "Haemoglobin Electrophoresis   Hb Electrophoresis",
+                "Haemoglobin Hb",
+                "Hb  Tc  Dc & Esr",
+                "Hb Tc & Dc",
+                "Hdl Cholesterol",
+                "Hepatitis A Virus Antibody   Igm  Anti Hav Igm",
+                "Hepatitis B Core Antibody   Igm (Hbcab   Igm)",
+                "Hepatitis B E Antibody   (Anti Hbeag)",
+                "Hepatitis B E Antigen   (Hbeag)",
+                "Hepatitis B Surface Antigen (Hbsag)   Elisa",
+                "Hepatitis B Surface Antigen (Hbsag)   Chemiluminiscence",
+                "Hepatitis B Surface Antigen (Hbsag)   Spot   Rapid Test",
+                "Hepatitis C Virus Antibody   Igg Total (Anti Hcv)   Elisa",
+                "Hepatitis C Virus Antibody (Anti Hcv)   Rapid",
+                "Hepatitis C Virus Antibody (Anti Hcv)   Chemiluminiscence",
+                "Hepatitis E Virus Antibody   Igm (Anti Hev Igm)",
+                "Herpes Simplex Virus (Hsv) 1 & 2 Antibodies Igg",
+                "Herpes Simplex Virus (Hsv) 1 & 2 Antibodies   Igm",
+                "Herpes Simplex Virus (Hsv) 1 Antibodies   Igg & Igm",
+                "Herpes Simplex Virus (Hsv) 2 Antibodies   Igg & Igm",
+                "High Sensitive C   Reactive Protein (Hscrp) Quantitative",
+                "Hiv 1 & 2 Elisa",
+                "Hiv 1 & 2   Chemiluminiscence",
+                "Hiv  Spot Rapid Test",
+                "Homocysteine Level",
+                "Human Growth Hormone  Gh",
+                "Immunoglobulin E   Total",
+                "India Ink Preparation   Stain For Cryptococcus   Csf",
+                "Indirect Coombs Test (Ict)",
+                "Inhibin A",
+                "Insulin   Postprandial",
+                "Insulin Random",
+                "Insulin (Oral Glucose   120 Min)",
+                "Insulin (Oral Glucose   30 Min)",
+                "Insulin (Oral Glucose   60 Min)",
+                "Insulin (Oral Glucose   90 Min)",
+                "Ionised Calcium",
+                "Iron",
+                "Iron & Tibc",
+                "Iron Profile",
+                "Lactate",
+                "Lactate Dehydrogenase (Ldh)",
+                "Ldl   Cholesterol",
+                "Le (Lupus Erythematosus) Cells",
+                "Leptospira Antibodies   Igg & Igm   Rapid",
+                "Lipase",
+                "Lipase",
+                "Lipoprotein (A)",
+                "Lupus Anticoagulant",
+                "Magnesium",
+                "Magnesium   24 Hrs Urine",
+                "Magnesium  Urine   Spot Sample",
+                "Malaria Test Camp",
+                "Mean Corpuscular Haemoglobin   Mch",
+                "Mean Corpuscular Haemoglobin Concentration   Mchc",
+                "Mean Corpuscular Volume Mcv",
+                "Microalbumin   Creatinine Ratio  Urine   Spot Sample",
+                "Microalbumin  Urine   Spot Sample",
+                "Microalbuminuria   24 Hrs Urine",
+                "Nail Clipping For Fungus",
+                "Nasal Swab For Culture Sensitivity   Aerobic",
+                "Nicotine",
+                "Nipple Discharge From Both Breasts (R & L)   Cytology",
+                "Nipple Discharge From One Breast   Cytology",
+                "Opiates (Morphine) (Doa)",
+                "Osmolality   Blood",
+                "Osmolality   Urine",
+                "Packed Cell Volume  Pcv   Hct",
+                "Pap Smear By Conventional Method",
+                "Partial Thromboplastin Time (Ptt)   Aptt",
+                "Peripheral Smear Study   Ps   Pbs",
+                "Phenobarbitone",
+                "Phenytoin (Eptoin)",
+                "Phosphorous   24 Hrs Urine",
+                "Phosphorus",
+                "Phosphorus  Urine   Spot Sample",
+                "Platelet Count  Plt Count",
+                "Pleural Fluid Analysis",
+                "Pleural Fluid For Culture & Sensitivity   Aerobic",
+                "Potassium   24 Hrs Urine",
+                "Potassium (K&)",
+                "Potassium  Urine   Spot Sample",
+                "Progesterone",
+                "Protein (Albumin)   24 Hrs Urine",
+                "Protein   Creatinine Ratio   24 Hrs Urine",
+                "Protein   Creatinine Ratio   Urine   Spot Sample",
+                "Protein Estimation  Urine   Spot Sample",
+                "Protein Total (Total Protein)",
+                "Prothrombin Time   Pt",
+                "Pus For Culture & Sensitivity   Aerobic",
+                "Quantiferon Tb Gold   Gamma Interferon For Tb",
+                "Rapid Malaria Test   Malarial Antigen Test",
+                "Rbc Count",
+                "Red Cell Indices (Mch  Mchc & Mcv)",
+                "Reticulocyte Count",
+                "Rheumatoid Arthritis   Ra Factor   Quantitative",
+                "Rubella Igg Antibody",
+                "Rubella Igm Antibody",
+                "Semen For Culture & Sensitivity   Aerobic",
+                "Serum Proteins",
+                "Serum Transferrin",
+                "Sickle Cell Preparation",
+                "Skin Scrapings For Fungus (Multiple Sites)",
+                "Skin Scrapings For Fungus (Single Site)",
+                "Slide Review (For Second Opinion)",
+                "Smear For C.Diphtheriae   Klb ( Diptheria)",
+                "Smear For Malarial Parasite (Mp)",
+                "Smear For Microfilaria (Mf)",
+                "Sodium   24 Hours Urine",
+                "Sodium (Na&)",
+                "Sodium  Urine   Spot Sample",
+                "Sputum For Afb",
+                "Sputum For Culture And Sensitivity   Aerobic",
+                "Stool Analysis   Complete",
+                "Stool For Culture & Sensitivity  Aerobic",
+                "Stool For Microscopy",
+                "Stool For Occult Blood",
+                "Stool For Reducing Substances",
+                "Suction Tip For Culture & Sensitivity Aerobic",
+                "Surveillance Test   Ot Swabs   Anaerobic Culture",
+                "Surveillance Test   Ot Swabs   Aerobic Culture",
+                "Swab For Culture & Sensitivity   Aerobic",
+                "Synovial Fluid For Culture & Sensitivity   Aerobic",
+                "Tc & Dc",
+                "Testosterone Panel   Androgen Panel",
+                "Thc   Tetrahydrocannabinol (Cannabis Marijuana) (Doa)",
+                "Throat Swab For Culture & Senstivity   Aerobic",
+                "Thyro 5 (T3  T4 Tsh  Free T3 & Free T4)",
+                "Thyroglobulin (Tg) Level",
+                "Thyroxine   T4",
+                "Tissue For Culture & Sensitivity  Aerobic",
+                "Tissue Transglutaminase (Ttg) Iga",
+                "Tissue Transglutaminase (Ttg)   Igg",
+                "Torch Profile   Igg",
+                "Torch Profile   Igg & Igm",
+                "Torch Profile   Igm",
+                "Total Iron Binding Capacity (Tibc)",
+                "Total Wbc Count Tc",
+                "Toxoplasma   Igg Antibody",
+                "Toxoplasma   Igm Antibody",
+                "Tracheal Tip For Culture & Sensitivity   Aerobic",
+                "Tracheostomy Aspirate For Culture & Sensitivity   Aerobic",
+                "Transferrin Saturation",
+                "Triglycerides (Tgl)",
+                "Triiodothyronine   T3",
+                "Troponin I (Qualitative)",
+                "Troponin T (Qualitative)",
+                "Typhidot   Igg (Qualitative)",
+                "Typhidot   Igm (Qualitative)",
+                "Urea",
+                "Urea   24 Hrs Urine",
+                "Urea  Urine   Spot Sample",
+                "Urethral Swab For Culture & Sensitivity Aerobic",
+                "Uric Acid",
+                "Uric Acid   24 Hrs Urine",
+                "Urine Complete Analysis",
+                "Urine For Bile Salt & Bile Pigment",
+                "Urine For Culture & Sensitivity  Aerobic",
+                "Urine For Drugs Level (Upto 6 Drugs)",
+                "Urine For Drugs Level (Upto 9 Drugs)",
+                "Urine For Fungus",
+                "Urine For Microscopy Deposit",
+                "Urine For Pregnancy Test   Ug",
+                "Urine For Reducing Substances",
+                "Urine Glucose   Fasting",
+                "Urine Glucose   Post Dinner",
+                "Urine Glucose   Post Lunch",
+        ]
+
+        autocomplete(document.getElementById("TestNameIP"), TestNames);
+    </script>
+
+</body>
+</html>

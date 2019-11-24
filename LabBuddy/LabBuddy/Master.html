@@ -1,0 +1,594 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ILD Master</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="ILD_Main.js"></script>
+  <script src="Master.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+    <style>
+h2 {
+    font-family: Verdana, Arial, sans-serif;
+    text-align: center;
+	color: #FFFFFF;
+}
+
+#header {
+	width: 100%;
+	height: 70px;
+	position: relative;
+	top: -40px;
+	background-color: #7FC7AF;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+p {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1em;
+    display:inline;
+}
+
+.left {
+	position: relative;
+	top: -40px;
+    float: left;
+}
+
+.right {
+	position: relative;
+	top: -40px;
+    float: right;
+}
+
+#main {
+	position: relative;
+	top: 170px;
+	float: left;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    font-size:x-small
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;    
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+* {
+  box-sizing: border-box;
+}
+td, th {
+    border: 1px solid black;
+    color:black;
+}
+
+@media only screen and (max-width:620px) {
+  /* For mobile phones: */
+  .menu, .main, .right {
+    width:100%;
+  }
+}
+</style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  .btn-default {
+      background: #000;
+      color: #fff;
+   }
+  .btn-default:hover {
+      background: #fff;
+      color: #000;
+   }
+  </style>
+</head>
+<body>
+
+
+
+
+    <nav class="navbar navbar-inverse" >
+  <div class="container-fluid">
+    <div class="navbar-header">
+     <a class="navbar-brand" style="color:white">MEDALL ILD - FI</a>
+    </div>
+   <!-- <button type="button" class="btn btn-info" style="margin-top:5px" onclick="ClusterFcn()" aria-label="Left Align"><span class="fa fa-binoculars fa-lg" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-warning" style="margin-top:5px" onclick="MonitorFcn()" aria-label="Left Align"><span class="fa fa-map-marker fa-lg" aria-hidden="true"></span></button>
+    <button type="button" class="btn btn-danger" style="margin-top:5px" onclick="RoutesFcn()" aria-label="Left Align"><span class="fa fa-cogs fa-lg" aria-hidden="true"></span></button>
+    <button type="button" id="PerBtn" class="btn btn-success" style="margin-top:5px" onclick="PerformanceFcn()" aria-label="Left Align"><span class="fa fa-info-circle fa-lg" aria-hidden="true"></span></button>-->
+      <ul class="nav navbar-nav">
+      <li><a id="Home" onclick="HomeFcn()" style="color:#1ABC9C">Home</a></li>
+      <li><a onclick="ClusterFcn()" style="color:#1ABC9C">Cluster Map</a></li>
+      <li><a onclick="RoutesFcn()" style="color:#1ABC9C">ILD Routes</a></li>
+      <li><a onclick="HomeFcn()" style="color:#1ABC9C">Monitor ILD</a></li>
+      <li><a id="PerBtn" onclick="PerformanceFcn()" style="color:#1ABC9C">ILD Visits</a></li>
+      <li><a id="PerBtnS" onclick="PerformanceFcnSnC()" style="color:#1ABC9C">ILD S&C</a></li>
+    </ul>
+    </div>
+</nav>
+
+<div class="container-fluid text-center">    
+  <div id="LDataDiv" class="row content">
+    <div id="LeftDiv" class="col-sm-2 sidenav">
+        
+    </div>
+    <div id="TableDiv" class="col-sm-8 text-left"> 
+    <div id="map" style="width:100%; height:1225px; overflow-y:visible; z-index:10">
+
+   
+    </div>
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div id="Data1" class="well">
+        <p id="Pname" style="color:#A93226; font-family:Verdana; font-size:medium; font-weight:bold"></p>   
+        <p id="Pvisits" style="color:#A93226; font-family:Verdana; font-size:small;"></p>
+        <p id="Psamples" style="color:#A93226; font-size:small"></p>
+        <p id="Pcash" style="color:#A93226; font-size:small"></p>
+      </div>
+      <div id="Data2" class="well">
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Powered by Larash Technologies Private Limited</p>
+</footer>
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="MasterClusterer.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaEdUeTptwjVdxAvL7LAbbZaLm0qMfB80&callback=initMap"></script>
+<script src="Cluster_Mapping.js"></script>
+<select id="travel-type" style="display:none">
+    <option value="DRIVING">Car</option>
+    <option value="BICYCLING">Bicycle</option>
+    <option value="WALKING">Walking</option>
+</select>
+
+
+    <style>
+            .div-decorator
+    {
+
+    }
+    .div-heading
+    {
+        border-bottom:1px dashed #5BC0DE;
+        padding-top:15px;
+        padding-bottom:15px;
+        margin:0px;
+        background-color:#F5F5F5;
+        border-radius:20px 20px 0px 0px;
+    }
+    .heading
+    {
+        color:#5FC9E5;
+    }
+    .div-content
+    {
+        padding:30px
+    }
+    .btn-circle
+    {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        
+    }
+    .btn-circle.btn-lg
+    {
+        width: 50px;
+        height: 50px;
+        padding: 10px 16px;
+        font-size: 18px;
+        
+    }
+    .btn-circle.btn-xl
+    {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        font-size: 24px;
+        
+    }
+    
+/* WRENCHING */
+@keyframes wrench {
+    0%{transform:rotate(-12deg)}
+	8%{transform:rotate(12deg)}
+	10%{transform:rotate(24deg)}
+	18%{transform:rotate(-24deg)}
+	20%{transform:rotate(-24deg)}
+	28%{transform:rotate(24deg)}
+	30%{transform:rotate(24deg)}
+	38%{transform:rotate(-24deg)}
+	40%{transform:rotate(-24deg)}
+	48%{transform:rotate(24deg)}
+	50%{transform:rotate(24deg)}
+	58%{transform:rotate(-24deg)}
+	60%{transform:rotate(-24deg)}
+	68%{transform:rotate(24deg)}
+	75%,100%{transform:rotate(0deg)}
+}
+.faa-wrench.animated,
+.faa-wrench.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-wrench {
+	animation: wrench 2.5s ease infinite;
+	transform-origin-x: 90%;
+	transform-origin-y: 35%;
+	transform-origin-z: initial;
+}
+.faa-wrench.animated.faa-fast,
+.faa-wrench.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-wrench.faa-fast {
+	animation: wrench 1.2s ease infinite;
+}
+.faa-wrench.animated.faa-slow,
+.faa-wrench.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-wrench.faa-slow {
+	animation: wrench 3.7s ease infinite;
+}
+
+/* BELL */
+@keyframes ring {
+	0%{transform:rotate(-15deg)}
+	2%{transform:rotate(15deg)}
+	4%{transform:rotate(-18deg)}
+	6%{transform:rotate(18deg)}
+	8%{transform:rotate(-22deg)}
+	10%{transform:rotate(22deg)}
+	12%{transform:rotate(-18deg)}
+	14%{transform:rotate(18deg)}
+	16%{transform:rotate(-12deg)}
+	18%{transform:rotate(12deg)}
+	20%,100%{transform:rotate(0deg)}
+}
+.faa-ring.animated,
+.faa-ring.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-ring {
+	animation: ring 2s ease infinite;
+	transform-origin-x: 50%;
+	transform-origin-y: 0px;
+	transform-origin-z: initial;
+}
+.faa-ring.animated.faa-fast,
+.faa-ring.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-ring.faa-fast {
+	animation: ring 1s ease infinite;
+}
+.faa-ring.animated.faa-slow,
+.faa-ring.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-ring.faa-slow {
+	animation: ring 3s ease infinite;
+}
+
+/* VERTICAL */
+@keyframes vertical {
+	0%{transform:translate(0,-3px)}
+	4%{transform:translate(0,3px)}
+	8%{transform:translate(0,-3px)}
+	12%{transform:translate(0,3px)}
+	16%{transform:translate(0,-3px)}
+	20%{transform:translate(0,3px)}
+	22%,100%{transform:translate(0,0)}
+}
+.faa-vertical.animated,
+.faa-vertical.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-vertical {
+	animation: vertical 2s ease infinite;
+}
+.faa-vertical.animated.faa-fast,
+.faa-vertical.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-vertical.faa-fast {
+	animation: vertical 1s ease infinite;
+}
+.faa-vertical.animated.faa-slow,
+.faa-vertical.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-vertical.faa-slow {
+	animation: vertical 4s ease infinite;
+}
+
+/* HORIZONTAL */
+@keyframes horizontal {
+	0%{transform:translate(0,0)}
+	6%{transform:translate(5px,0)}
+	12%{transform:translate(0,0)}
+	18%{transform:translate(5px,0)}
+	24%{transform:translate(0,0)}
+	30%{transform:translate(5px,0)}
+	36%,100%{transform:translate(0,0)}
+}
+.faa-horizontal.animated,
+.faa-horizontal.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-horizontal {
+	animation: horizontal 2s ease infinite;
+}
+.faa-horizontal.animated.faa-fast,
+.faa-horizontal.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-horizontal.faa-fast {
+	animation: horizontal 1s ease infinite;
+}
+.faa-horizontal.animated.faa-slow,
+.faa-horizontal.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-horizontal.faa-slow {
+	animation: horizontal 3s ease infinite;
+}
+
+/* FLASHING */
+@keyframes flash {
+	0%,100%,50%{opacity:1}
+	25%,75%{opacity:0}
+}
+.faa-flash.animated,
+.faa-flash.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-flash {
+	animation: flash 2s ease infinite;
+}
+.faa-flash.animated.faa-fast,
+.faa-flash.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-flash.faa-fast {
+	animation: flash 1s ease infinite;
+}
+.faa-flash.animated.faa-slow,
+.faa-flash.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-flash.faa-slow {
+	animation: flash 3s ease infinite;
+}
+
+/* BOUNCE */
+@keyframes bounce {
+	0%,10%,20%,50%,80%,100%{transform:translateY(0)}
+	40%{transform:translateY(-15px)}
+	60%{transform:translateY(-15px)}
+}
+.faa-bounce.animated,
+.faa-bounce.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-bounce {
+	animation: bounce 2s ease infinite;
+}
+.faa-bounce.animated.faa-fast,
+.faa-bounce.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-bounce.faa-fast {
+	animation: bounce 1s ease infinite;
+}
+.faa-bounce.animated.faa-slow,
+.faa-bounce.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-bounce.faa-slow {
+	animation: bounce 3s ease infinite;
+}
+
+/* SPIN */
+@keyframes spin{
+	0%{transform:rotate(0deg)}
+	100%{transform:rotate(359deg)}
+}
+.faa-spin.animated,
+.faa-spin.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-spin {
+	animation: spin 1.5s linear infinite;
+}
+.faa-spin.animated.faa-fast,
+.faa-spin.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-spin.faa-fast {
+	animation: spin 0.7s linear infinite;
+}
+.faa-spin.animated.faa-slow,
+.faa-spin.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-spin.faa-slow {
+	animation: spin 2.2s linear infinite;
+}
+
+/* FLOAT */
+@keyframes float{
+	0%{transform: translateY(0)}
+	50%{transform: translateY(-6px)}
+	100%{transform: translateY(0)}
+}
+.faa-float.animated,
+.faa-float.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-float {
+	animation: float 2s linear infinite;
+}
+.faa-float.animated.faa-fast,
+.faa-float.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-float.faa-fast {
+	animation: float 1s linear infinite;
+}
+.faa-float.animated.faa-slow,
+.faa-float.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-float.faa-slow {
+	animation: float 3s linear infinite;
+}
+
+/* PULSE */
+@keyframes pulse {
+	0% {transform: scale(1.1)}
+ 	50% {transform: scale(0.8)}
+ 	100% {transform: scale(1.1)}
+}
+.faa-pulse.animated,
+.faa-pulse.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-pulse {
+	animation: pulse 2s linear infinite;
+}
+.faa-pulse.animated.faa-fast,
+.faa-pulse.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-pulse.faa-fast {
+	animation: pulse 1s linear infinite;
+}
+.faa-pulse.animated.faa-slow,
+.faa-pulse.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-pulse.faa-slow {
+	animation: pulse 3s linear infinite;
+}
+
+/* SHAKE */
+.faa-shake.animated,
+.faa-shake.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-shake {
+	animation: wrench 2.5s ease infinite;
+}
+.faa-shake.animated.faa-fast,
+.faa-shake.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-shake.faa-fast {
+	animation: wrench 1.2s ease infinite;
+}
+.faa-shake.animated.faa-slow,
+.faa-shake.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-shake.faa-slow {
+	animation: wrench 3.7s ease infinite;
+}
+
+/* TADA */
+@keyframes tada {
+	0% {transform: scale(1)}
+	10%,20% {transform:scale(.9) rotate(-8deg);}
+	30%,50%,70% {transform:scale(1.3) rotate(8deg)}
+	40%,60% {transform:scale(1.3) rotate(-8deg)}
+	80%,100% {transform:scale(1) rotate(0)}
+}
+
+.faa-tada.animated,
+.faa-tada.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-tada {
+	animation: tada 2s linear infinite;
+}
+.faa-tada.animated.faa-fast,
+.faa-tada.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-tada.faa-fast {
+	animation: tada 1s linear infinite;
+}
+.faa-tada.animated.faa-slow,
+.faa-tada.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-tada.faa-slow {
+	animation: tada 3s linear infinite;
+}
+
+/* PASSING */
+@keyframes passing {
+	0% {transform:translateX(-50%); opacity:0}
+	50% {transform:translateX(0%); opacity:1}
+	100% {transform:translateX(50%); opacity:0}
+}
+
+.faa-passing.animated,
+.faa-passing.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-passing {
+	animation: passing 2s linear infinite;
+}
+.faa-passing.animated.faa-fast,
+.faa-passing.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-passing.faa-fast {
+	animation: passing 1s linear infinite;
+}
+.faa-passing.animated.faa-slow,
+.faa-passing.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-passing.faa-slow {
+	animation: passing 3s linear infinite;
+}
+
+/* PASSING REVERSE */
+
+@keyframes passing-reverse {
+	0% {transform:translateX(50%); opacity:0}
+	50% {transform:translateX(0%); opacity:1}
+	100% {transform:translateX(-50%); opacity:0}
+}
+
+.faa-passing-reverse.animated,
+.faa-passing-reverse.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-passing-reverse {
+	animation: passing-reverse 2s linear infinite;
+}
+.faa-passing-reverse.animated.faa-fast,
+.faa-passing-reverse.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-passing-reverse.faa-fast {
+	animation: passing-reverse 1s linear infinite;
+}
+.faa-passing-reverse.animated.faa-slow,
+.faa-passing-reverse.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-passing-reverse.faa-slow {
+	animation: passing-reverse 3s linear infinite;
+}
+
+/* WAVE */
+@keyframes burst {
+	0% {opacity:.6}
+	50% {transform:scale(1.8);opacity:0}
+	100%{opacity:0}
+}
+.faa-burst.animated,
+.faa-burst.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-burst {
+	animation: burst 2s infinite linear
+}
+.faa-burst.animated.faa-fast,
+.faa-burst.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-burst.faa-fast {
+	animation: burst 1s infinite linear
+}
+.faa-burst.animated.faa-slow,
+.faa-burst.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-burst.faa-slow {
+	animation: burst 3s infinite linear
+}
+
+    </style>
+
+</body>
+</html>
